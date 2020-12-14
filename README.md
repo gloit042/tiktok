@@ -3,7 +3,7 @@
 ## usage
 
 ```
-# compiler tiktok
+# compile tiktok
 gcc -c /path/to/foo.c -o /path/to/foo.o
 objcopy --redefine-sym main=target_main /path/to/foo.o fs/tiktok/target.o_shipped
 make M=fs/tiktok
