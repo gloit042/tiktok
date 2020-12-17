@@ -17,26 +17,25 @@ struct completion perf_done;
 
 int perf_thread(void *data) {
 	int i = 0;
+	int s = 0;
 	u64 nsecs = 0;
 	u64 msecs;
 	u64 seqs[TIKTOK_REPEATS];
-	kernel_fpu_begin();
 	while (i < TIKTOK_WARMUP) {
 		target_main();
 		i += 1;
 	}
 	i = 0;
 	while (i < TIKTOK_REPEATS) {
-		struct timespec start = {0}, end = {0};
-		getrawmonotonic(&start);
-		target_main();
-		getrawmonotonic(&end);
-		seqs[i] = (end.tv_sec - start.tv_sec) * 1000000000 + end.tv_nsec - start.tv_nsec;
+		ktime_t start, end;
+		start = ktime_get();
+		s = target_main();
+		end = ktime_get();
+		seqs[i] = ktime_to_ns(ktime_sub(end, start));
 		nsecs += seqs[i];
 		i += 1;
 		cond_resched();
 	}
-	kernel_fpu_end();
 	msecs = nsecs / TIKTOK_REPEATS / 1000;
 	i = 0;
 	printk(KERN_INFO "Tiktok: seqs: ");

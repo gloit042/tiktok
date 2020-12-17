@@ -1,0 +1,4 @@
+/home/cp/tiktok/src/tiktok_target.o: /home/cp/tiktok/src/tiktok_target.c \
+  include/linux/kconfig.h include/generated/autoconf.h \
+  include/linux/compiler_types.h include/linux/compiler_attributes.h \
+  include/linux/compiler-clang.h

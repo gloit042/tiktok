@@ -3,7 +3,7 @@ import os
 import time
 import subprocess
 if __name__ == "__main__":
-    # COMMAND = os.getcwd() + "/a.out"
+    #COMMAND = os.getcwd() + "/a.out"
     COMMAND = "taskset -c 0 " + os.getcwd() + "/a.out"
     times = []
     # Warmup phase
@@ -15,5 +15,3 @@ if __name__ == "__main__":
         end = time.time()
         times.append(end - start)
     print(times)
-    print(sum(times)/100)
-
