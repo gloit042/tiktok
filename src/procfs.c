@@ -28,12 +28,14 @@ int bench_thread(void *data) {
 	i = 0;
 	while (i < TIKTOK_REPEATS) {
 		ktime_t start, end;
+		preempt_disable();
 		start = ktime_get();
 		s = target_main();
 		end = ktime_get();
 		seqs[i] = ktime_to_ns(ktime_sub(end, start));
 		nsecs += seqs[i];
 		i += 1;
+		preempt_enable();
 		cond_resched();
 	}
 	msecs = nsecs / TIKTOK_REPEATS / 1000;
